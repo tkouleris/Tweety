@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.tkouleris.tweety.service.MyUserDetailsService;
+import com.tkouleris.tweety.service.CustomUserDetailsService;
 import com.tkouleris.tweety.util.JwtUtil;
 
 @Component
@@ -24,7 +24,7 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 	@Autowired
 	private JwtUtil jwUtil;
 	@Autowired
-	private MyUserDetailsService userDetailsService;
+	private CustomUserDetailsService userDetailsService;
 	
 	@Override
 	protected void doFilterInternal(

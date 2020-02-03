@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tkouleris.tweety.model.User;
-import com.tkouleris.tweety.service.MyUserDetailsService;
+import com.tkouleris.tweety.service.CustomUserDetailsService;
 import com.tkouleris.tweety.service.UserCrudService;
 import com.tkouleris.tweety.util.JwtUtil;
 
@@ -29,7 +29,7 @@ public class AuthController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	@Autowired
-	private MyUserDetailsService userDetailsService;
+	private CustomUserDetailsService userDetailsService;
 	@Autowired
 	private JwtUtil jwtTokenUtil;
 	

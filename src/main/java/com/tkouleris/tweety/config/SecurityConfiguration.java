@@ -13,19 +13,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.tkouleris.tweety.filters.JwtRequestFilter;
-import com.tkouleris.tweety.service.MyUserDetailsService;
+import com.tkouleris.tweety.service.CustomUserDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
-	private MyUserDetailsService myUserDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		auth.userDetailsService(myUserDetailsService);
+		auth.userDetailsService(customUserDetailsService);
 	}
 	
 	

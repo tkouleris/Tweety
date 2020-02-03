@@ -11,7 +11,7 @@ import com.tkouleris.tweety.dao.UserRepository;
 import com.tkouleris.tweety.model.User;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired
 	private UserRepository R_user;
@@ -20,7 +20,7 @@ public class MyUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = R_user.findByUsername(username);
 		
-		return new MyUserDetails(user);
+		return new CustomUserDetails(user);
 	}
 	
 }

@@ -7,11 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.tkouleris.tweety.model.User;
 
-public class MyUserDetails implements UserDetails{
+public class CustomUserDetails implements UserDetails{
 	
 	private User user;
 
-	public MyUserDetails(User user)
+	public CustomUserDetails(User user)
 	{
 		this.user = user;
 	}
