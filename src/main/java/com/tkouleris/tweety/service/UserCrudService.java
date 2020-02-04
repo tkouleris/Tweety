@@ -22,7 +22,14 @@ public class UserCrudService {
 		String UserPassword = user.getPassword().trim();
 		
 		boolean UsernameIsNotValid = (UserUsername == null) || !UserUsername.matches("[A-Za-z0-9_]+");
-		//boolean EmailIsNotValid = (UserEmail == null ) || !UserEmail.matches("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}");
+		/* Email Restriction
+		 * ---------------------
+		 *This expression matches email addresses, and checks that they are of the proper form. 
+		 *It checks to ensure the top level domain is between 2 and 4 characters long, 
+		 *but does not check the specific domain against a list (especially since 
+		 *there are so many of them now).		  		
+		 */
+		boolean EmailIsNotValid = (UserEmail == null ) || !UserEmail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
 		
 		/* Password Restriction
 		 * ------------------------
@@ -37,9 +44,8 @@ public class UserCrudService {
 		
 		if(UsernameIsNotValid) throw new Exception("Username not set or not valid!");
 		if(PasswordIsNotValid ) throw new Exception("Password not set or not valid");
-		//if(EmailIsNotValid) throw new Exception("Email not set or not valid!");		
-		
-		
+		if(EmailIsNotValid) throw new Exception("Email not set or not valid!");		
+				
 		
 	    user.setPassword(passwordEncoder.encode(user.getPassword()));	    
 	    return R_User.save(user);
