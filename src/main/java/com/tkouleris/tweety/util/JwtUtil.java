@@ -14,7 +14,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class JwtUtil {
-	private String SECRET_KEY="secret";
+	private String SECRET_KEY="jvBtDp1IU1eBv9d6Dy8ryCKY6op314vn1INVd0fCOt64L8Yf8VYAZv52nupFm";
+	private int EXPIRATION_TIME = 3600000; // 1 hour
 	
 	public String extractUsername(String token)
 	{
@@ -51,7 +52,7 @@ public class JwtUtil {
 	private String createToken(Map<String, Object> claims, String subject)
 	{
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 	
