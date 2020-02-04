@@ -15,10 +15,11 @@ public class ControllerAdvisor {
 	
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<Object> handleGenericException(Exception e) {
-
+		String message = e.getMessage() != null ? e.getMessage():"Bad Request";
+		
 	    Map<String, Object> body = new LinkedHashMap<>();
 	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", e.getMessage());
+	    body.put("message", message);
 
 	    return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
