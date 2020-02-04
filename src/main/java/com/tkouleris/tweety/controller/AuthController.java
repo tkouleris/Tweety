@@ -33,11 +33,6 @@ public class AuthController {
 	@Autowired
 	private JwtUtil jwtTokenUtil;
 	
-	@RequestMapping({"/hello"})
-	public String hello()
-	{
-		return "Hello World";
-	}
 
 	@PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> register(@RequestBody User user) throws Exception
