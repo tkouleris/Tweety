@@ -17,6 +17,8 @@ public class UserCrudService {
 	 	
 	public User createNewUser(User user) throws Exception
 	{
+		if(user_exists(user)) throw new Exception("User already exists!");
+		
 		String UserEmail = user.getEmail().trim();
 		String UserUsername = user.getUsername().trim();
 		String UserPassword = user.getPassword().trim();
@@ -49,5 +51,12 @@ public class UserCrudService {
 		
 	    user.setPassword(passwordEncoder.encode(user.getPassword()));	    
 	    return R_User.save(user);
+	}
+	
+	private Boolean user_exists(User user)
+	{
+		if(R_User.findByUsername(user.getUsername()) != null) return true;
+		if(R_User.findByEmail(user.getEmail()) != null) return true;
+		return false;
 	}
 }
