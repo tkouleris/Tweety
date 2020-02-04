@@ -1,0 +1,18 @@
+04/02/2020
+----------------
+Endpoints
+- tweet
+-- tweet/create /* tweet_message, user_id */
+-- tweet/update /* tweet_message, tweet_id */
+-- tweet/delete /* tweet_id */
+-- tweet/feed /* list of user following tweets ordered by date */
+
+- follow
+-- follow/add /* user_id, followee_id */
+-- follow/unfollow /* follow_id */
+
+-- comment
+-- comment/add /* tweet_id, user_id, message */
+-- comment/update /* comment_id, message */
+-- comment/delete /* comment_id */
+
