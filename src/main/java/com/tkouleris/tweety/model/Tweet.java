@@ -11,19 +11,19 @@ import javax.persistence.ManyToOne;
 public class Tweet {
 	@Id
 	@GeneratedValue
-	private long tweet_id;
+	private long tweetid;
 	
 	private String tweet_message;
 	private Timestamp tweet_created_at;
 	private Timestamp tweet_updated_at;
 	@ManyToOne
-	private User tweet_user_id;
+	private User tweet_user;
 	
 	public long getTweet_id() {
-		return tweet_id;
+		return tweetid;
 	}
 	public void setTweet_id(long tweet_id) {
-		this.tweet_id = tweet_id;
+		this.tweetid = tweet_id;
 	}
 	public String getTweet_message() {
 		return tweet_message;
@@ -44,10 +44,10 @@ public class Tweet {
 		this.tweet_updated_at = tweet_updated_at;
 	}
 	public User getTweet_user_id() {
-		return tweet_user_id;
+		return tweet_user;
 	}
-	public void setTweet_user_id(User tweet_user_id) {
-		this.tweet_user_id = tweet_user_id;
+	public void setTweet_user_id(User user) {
+		this.tweet_user = user;
 	}
 	
 	
