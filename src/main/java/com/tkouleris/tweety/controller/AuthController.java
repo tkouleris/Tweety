@@ -47,7 +47,7 @@ public class AuthController {
 		return new ResponseEntity<>(body,HttpStatus.CREATED);
 	}
 	
-	@PostMapping(value = "/authenticate")
+	@PostMapping(value = "/authenticate", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> authenticateUser(@RequestBody User user)
 	{
 		Authentication auth = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
