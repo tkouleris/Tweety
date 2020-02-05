@@ -15,8 +15,9 @@ public class TweetService {
 	@Autowired
 	TweetRepository R_Tweet;
 	
-	public List<Tweet> getFeed(User loggedInUser)
+	public Tweet getFeed(User loggedInUser)
 	{
-		return R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id());
+		List<Tweet> userTweets = R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id());
+		return userTweets.get(0);
 	}
 }

@@ -30,13 +30,13 @@ public class TweetController
 	public ResponseEntity<Object> getFeed(Authentication authentication)
 	{			
         User LoggedInUser = R_User.findByUsername(authentication.getName());
-        List<Tweet> tweets = tweetService.getFeed(LoggedInUser);
+        Tweet latestUserTweet = tweetService.getFeed(LoggedInUser);
         
 	    Map<String, Object> body = new LinkedHashMap<>();
 	    body.put("timestamp", LocalDateTime.now());
 	    body.put("message", "User created!");
-	    body.put("data", tweets );
-	    System.out.println("Test");
+	    body.put("data", latestUserTweet );
+	    
 		return new ResponseEntity<>(body,HttpStatus.OK);
 	}
 }
