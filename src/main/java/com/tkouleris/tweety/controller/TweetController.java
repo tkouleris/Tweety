@@ -22,15 +22,13 @@ import com.tkouleris.tweety.service.TweetService;
 public class TweetController 
 {
 	@Autowired
-	UserRepository R_User;
+	private UserRepository R_User;
 	@Autowired
-	TweetService tweetService;
+	private TweetService tweetService;
 	
-	@GetMapping(path = "/tweet/feed", consumes = "application/json", produces = "application/json")
+	@GetMapping(path = "/feed", produces = "application/json")
 	public ResponseEntity<Object> getFeed(Authentication authentication)
-	{		
-		
-		System.out.println(authentication.getName());
+	{			
         User LoggedInUser = R_User.findByUsername(authentication.getName());
         List<Tweet> tweets = tweetService.getFeed(LoggedInUser);
         
@@ -38,7 +36,7 @@ public class TweetController
 	    body.put("timestamp", LocalDateTime.now());
 	    body.put("message", "User created!");
 	    body.put("data", tweets );
-		
+	    System.out.println("Test");
 		return new ResponseEntity<>(body,HttpStatus.OK);
 	}
 }

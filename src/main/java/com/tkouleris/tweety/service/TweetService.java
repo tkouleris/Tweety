@@ -17,6 +17,6 @@ public class TweetService {
 	
 	public List<Tweet> getFeed(User loggedInUser)
 	{
-		return R_Tweet.findByTweet_UserUserid(loggedInUser.getUser_id());
+		return R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id());
 	}
 }
