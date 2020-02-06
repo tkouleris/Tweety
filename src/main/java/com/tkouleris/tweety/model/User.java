@@ -1,8 +1,11 @@
 package com.tkouleris.tweety.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -13,6 +16,9 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	
+    @OneToMany(mappedBy = "follower")
+    private List<Follower> follows;
 	
 	public long getUser_id() {
 		return userid;
