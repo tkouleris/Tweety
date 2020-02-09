@@ -2,7 +2,6 @@
 ----------------
 Endpoints
 - tweet
--- tweet/create /* tweet_message, user_id */
 -- tweet/update /* tweet_message, tweet_id */
 -- tweet/delete /* tweet_id */
 -- tweet/feed /* list of user following tweets ordered by date */
