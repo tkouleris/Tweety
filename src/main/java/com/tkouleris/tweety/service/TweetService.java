@@ -11,6 +11,7 @@ import com.tkouleris.tweety.dao.TweetRepository;
 import com.tkouleris.tweety.dao.UserRepository;
 import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
+import com.tkouleris.tweety.util.TimestampUtil;
 
 @Service
 public class TweetService {
@@ -19,8 +20,8 @@ public class TweetService {
 	TweetRepository R_Tweet;
 	@Autowired
 	UserRepository R_User;
-//	@Autowired
-//	Authentication authentication;
+	@Autowired
+	TimestampUtil timestampUtil;
 	
 	public Tweet getFeed(User loggedInUser)
 	{
@@ -32,7 +33,7 @@ public class TweetService {
 	{		
         User LoggedInUser = R_User.findByUsername(authentication.getName());
         newTweet.setTweet_user_id(LoggedInUser);
-        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+        Timestamp currentTimestamp = timestampUtil.currentTimestamp();
         newTweet.setTweet_created_at(currentTimestamp );
         newTweet.setTweet_updated_at(currentTimestamp );
         return R_Tweet.save(newTweet);
