@@ -38,4 +38,24 @@ public class TweetService {
         newTweet.setTweet_updated_at(currentTimestamp );
         return R_Tweet.save(newTweet);
 	}
+	
+	public Tweet deleteTweet(Authentication authentication, long tweet_id) throws Exception
+	{
+		Tweet tweetToDelete = R_Tweet.findById(tweet_id).orElse(null);
+		if( tweetToDelete == null)
+		{
+			throw new Exception("Tweet to delete not found!");
+		}
+		
+		User LoggedInUser = R_User.findByUsername(authentication.getName());		
+		if(LoggedInUser != tweetToDelete.getTweet_user_id())
+		{
+			throw new Exception("You have no rights to delete this tweet!");
+		}
+		
+		R_Tweet.delete(tweetToDelete);
+		
+		return tweetToDelete;
+					
+	}
 }
