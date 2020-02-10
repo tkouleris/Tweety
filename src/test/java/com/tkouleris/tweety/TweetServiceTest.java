@@ -31,7 +31,7 @@ public class TweetServiceTest {
 	TimestampUtil timestampUtil;
 	
 	@Test
-	void verify_that_feed_is_returning_Tweet_object()
+	void should_return_a_Tweet_when_many_feed_found()
 	{
 		User loggedInUser = new User();
 		loggedInUser.setUser_id(1);
