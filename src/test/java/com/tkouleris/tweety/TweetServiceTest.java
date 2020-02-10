@@ -49,4 +49,18 @@ public class TweetServiceTest {
 
 		Assert.isTrue(tweet instanceof Tweet);
 	}
+	
+	@Test
+	void should_return_null_when_no_feed_found()
+	{
+		User loggedInUser = new User();
+		loggedInUser.setUser_id(1);
+		List<Tweet> myList = new ArrayList<>();
+		
+		Mockito.when(R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id())).thenReturn(myList);	
+
+		Tweet tweet = service.getFeed(loggedInUser);
+
+		Assert.isTrue(tweet == null);
+	}
 }	

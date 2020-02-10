@@ -26,7 +26,8 @@ public class TweetService {
 	public Tweet getFeed(User loggedInUser)
 	{
 		List<Tweet> userTweets = R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id());
-		return userTweets.get(0);
+		if(userTweets.size() > 0) return userTweets.get(0);
+		return null;		
 	}
 	
 	public Tweet createTweet(Authentication authentication, Tweet newTweet)
