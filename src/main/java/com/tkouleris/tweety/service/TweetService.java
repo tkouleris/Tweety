@@ -36,7 +36,7 @@ public class TweetService {
         newTweet.setTweet_user_id(LoggedInUser);
         Timestamp currentTimestamp = timestampUtil.currentTimestamp();
         newTweet.setTweet_created_at(currentTimestamp );
-        newTweet.setTweet_updated_at(currentTimestamp );
+        newTweet.setTweet_updated_at(currentTimestamp );        
         return R_Tweet.save(newTweet);
 	}
 	
