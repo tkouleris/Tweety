@@ -83,7 +83,6 @@ public class TweetServiceTest {
 		Mockito.when(authentication.getName()).thenReturn("tkouleris");
 		Mockito.when(R_User.findByUsername("tkouleris")).thenReturn(loggedInUser);
 		Mockito.when(R_Tweet.save(any(Tweet.class))).thenReturn(newTweet);
-		System.out.println(System.currentTimeMillis());
 		Mockito.when(timestampUtil.currentTimestamp()).thenReturn(new Timestamp(System.currentTimeMillis()));
 		
 		Tweet savedTweet = service.createTweet(authentication, newTweet);
