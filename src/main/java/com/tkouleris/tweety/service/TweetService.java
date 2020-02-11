@@ -40,6 +40,21 @@ public class TweetService {
         return R_Tweet.save(newTweet);
 	}
 	
+	public void updateTweet(Authentication authentication, long tweet_id, String message) throws Exception
+	{
+		Tweet tweetToUpdate = R_Tweet.findById(tweet_id).orElse(null);
+		User loggedInUser = R_User.findByUsername(authentication.getName());
+		if(tweetToUpdate == null)
+		{
+			throw new Exception("Tweet not found");
+		}
+		if(!loggedInUser.equals(tweetToUpdate.getTweet_user_id()))
+		{
+			throw new Exception("No permission to edit this tweet!");
+		}		
+		tweetToUpdate.setTweet_message(message);
+	}
+	
 	public Tweet deleteTweet(Authentication authentication, long tweet_id) throws Exception
 	{
 		Tweet tweetToDelete = R_Tweet.findById(tweet_id).orElse(null);
@@ -56,7 +71,6 @@ public class TweetService {
 		
 		R_Tweet.delete(tweetToDelete);
 		
-		return tweetToDelete;
-					
+		return tweetToDelete;					
 	}
 }

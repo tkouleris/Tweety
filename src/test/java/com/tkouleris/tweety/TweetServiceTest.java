@@ -6,7 +6,9 @@ import static org.mockito.ArgumentMatchers.any;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -89,6 +91,53 @@ public class TweetServiceTest {
 		Assert.isTrue(savedTweet instanceof Tweet);
 		Assert.isTrue("unit testing".equals(newTweet.getTweet_message()));
 		Assert.isTrue(loggedInUser.equals(newTweet.getTweet_user_id()));		
-
 	}
+	
+	@Test
+	void updateTweet_should_change_the_tweet_message() throws Exception
+	{
+		User loggedInUser = new User();
+		loggedInUser.setUser_id(1);
+		loggedInUser.setUsername("tkouleris");
+		Tweet tweet = new Tweet();
+		tweet.setTweet_id(1);
+		tweet.setTweet_message("first message");
+		tweet.setTweet_user_id(loggedInUser);
+		Mockito.when(R_Tweet.findById((long) 1)).thenReturn(Optional.of(tweet));
+		Mockito.when(R_Tweet.save(tweet)).thenReturn(tweet);
+		Mockito.when(authentication.getName()).thenReturn("tkouleris");
+		Mockito.when(R_User.findByUsername("tkouleris")).thenReturn(loggedInUser);
+		service.updateTweet(authentication,1, "new message");		
+		
+		Assert.isTrue(tweet.getTweet_message().equals("new message"));	
+	}
+	
+	@Test
+	void updateTweet_should_throw_exception_when_record_not_found() throws Exception
+	{
+		User loggedInUser = new User();
+		loggedInUser.setUser_id(1);
+		loggedInUser.setUsername("tkouleris");
+		Mockito.when(authentication.getName()).thenReturn("tkouleris");
+		Mockito.when(R_User.findByUsername("tkouleris")).thenReturn(loggedInUser);
+		Mockito.when(R_Tweet.findById((long) 1)).thenReturn(null);				
+		Assertions.assertThrows(Exception.class,()->service.updateTweet(authentication,1, "new message") );
+	}	
+	
+	@Test
+	void updateTweet_should_throw_exception_when_loggedIn_user_is_not_the_owner_of_the_tweet() throws Exception
+	{
+		User loggedInUser = new User();
+		User OtherUser = new User();
+		loggedInUser.setUser_id(1);
+		loggedInUser.setUsername("tkouleris");
+		Tweet tweet = new Tweet();
+		tweet.setTweet_id(1);
+		tweet.setTweet_message("first message");
+		tweet.setTweet_user_id(OtherUser);
+		Mockito.when(authentication.getName()).thenReturn("tkouleris");
+		Mockito.when(R_User.findByUsername("tkouleris")).thenReturn(loggedInUser);
+		Mockito.when(R_Tweet.findById((long) 1)).thenReturn(Optional.of(tweet));				
+		Assertions.assertThrows(Exception.class,()->service.updateTweet(authentication,1, "new message") );
+	}		
 }	
