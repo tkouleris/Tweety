@@ -2,7 +2,7 @@
 ----------------
 Endpoints
 - tweet
--- tweet/update /* tweet_message, tweet_id */
+-- tweet/update /* api routing */
 -- tweet/feed /* list of user following tweets ordered by date */
 
 - follow
