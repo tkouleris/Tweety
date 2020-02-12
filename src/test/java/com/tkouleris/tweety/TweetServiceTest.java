@@ -1,10 +1,14 @@
 package com.tkouleris.tweety;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,20 +100,35 @@ public class TweetServiceTest {
 	@Test
 	void updateTweet_should_change_the_tweet_message() throws Exception
 	{
+		// Prepare Data
 		User loggedInUser = new User();
 		loggedInUser.setUser_id(1);
 		loggedInUser.setUsername("tkouleris");
+		
 		Tweet tweet = new Tweet();
 		tweet.setTweet_id(1);
 		tweet.setTweet_message("first message");
 		tweet.setTweet_user_id(loggedInUser);
+		
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = dateFormat.parse("23/09/2007");
+		long time = date.getTime();
+		Timestamp t = new Timestamp(time);
+		Mockito.when(timestampUtil.currentTimestamp()).thenReturn(t);
+		
 		Mockito.when(R_Tweet.findById((long) 1)).thenReturn(Optional.of(tweet));
 		Mockito.when(R_Tweet.save(tweet)).thenReturn(tweet);
 		Mockito.when(authentication.getName()).thenReturn("tkouleris");
-		Mockito.when(R_User.findByUsername("tkouleris")).thenReturn(loggedInUser);
-		service.updateTweet(authentication,1, "new message");		
+		Mockito.when(R_User.findByUsername("tkouleris")).thenReturn(loggedInUser);		
+
 		
-		Assert.isTrue(tweet.getTweet_message().equals("new message"));	
+		// run
+		service.updateTweet(authentication,1, "new message");
+		
+		// Assertions
+		Assert.isTrue(tweet.getTweet_message().equals("new message"));
+		assertThat(tweet.getTweet_updated_at()).isEqualTo(t);		
 	}
 	
 	@Test
