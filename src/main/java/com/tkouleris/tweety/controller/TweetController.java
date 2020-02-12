@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.tkouleris.tweety.dao.UserRepository;
@@ -55,6 +58,23 @@ public class TweetController
 
 		return new ResponseEntity<>(body,HttpStatus.CREATED);
 	}	
+	
+	@PutMapping(path = "tweet/update/{tweet_id}", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<Object> updateTweet(
+			@PathVariable("tweet_id") long tweet_id, 
+			@RequestBody @Valid Tweet tweet, 
+			Authentication authentication
+	) throws Exception
+	{		
+		Tweet updatedTweet = tweetService.updateTweet(authentication, tweet_id, tweet.getTweet_message());
+
+	    Map<String, Object> body = new LinkedHashMap<>();
+	    body.put("timestamp", LocalDateTime.now());
+	    body.put("message", "Tweet updated!");
+	    body.put("data", updatedTweet );
+
+		return new ResponseEntity<>(body,HttpStatus.OK);
+	}		
 	
 	@DeleteMapping(path = "tweet/{tweet_id}")
 	public ResponseEntity<Object> delete(

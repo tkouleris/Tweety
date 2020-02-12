@@ -40,7 +40,7 @@ public class TweetService {
         return R_Tweet.save(newTweet);
 	}
 	
-	public void updateTweet(Authentication authentication, long tweet_id, String message) throws Exception
+	public Tweet updateTweet(Authentication authentication, long tweet_id, String message) throws Exception
 	{
 		Tweet tweetToUpdate = R_Tweet.findById(tweet_id).orElse(null);
 		User loggedInUser = R_User.findByUsername(authentication.getName());
@@ -53,6 +53,8 @@ public class TweetService {
 			throw new Exception("No permission to edit this tweet!");
 		}		
 		tweetToUpdate.setTweet_message(message);
+		tweetToUpdate.setTweet_updated_at(timestampUtil.currentTimestamp());
+		return R_Tweet.save(tweetToUpdate);
 	}
 	
 	public Tweet deleteTweet(Authentication authentication, long tweet_id) throws Exception
