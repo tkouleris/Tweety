@@ -158,5 +158,38 @@ public class TweetServiceTest {
 		Mockito.when(R_User.findByUsername("tkouleris")).thenReturn(loggedInUser);
 		Mockito.when(R_Tweet.findById((long) 1)).thenReturn(Optional.of(tweet));				
 		Assertions.assertThrows(Exception.class,()->service.updateTweet(authentication,1, "new message") );
-	}		
+	}	
+	
+	@Test
+	/*
+	 * Is it a useful test?
+	 */
+	void showTweet_sould_return_a_list_of_tweets()
+	{
+		User requestedUser = new User();
+		requestedUser.setUser_id(1);
+		
+		Tweet tweet1 = new Tweet();
+		tweet1.setTweet_message("tweet 1");
+		tweet1.setTweet_user_id(requestedUser);
+		
+		Tweet tweet2 = new Tweet();
+		tweet2.setTweet_message("tweet 2");
+		tweet2.setTweet_user_id(requestedUser);
+		
+		Tweet tweet3 = new Tweet();
+		tweet3.setTweet_message("tweet 3");
+		tweet3.setTweet_user_id(requestedUser);
+		
+		List<Tweet> userTweets = new ArrayList<>();
+		userTweets.add(tweet1);
+		userTweets.add(tweet2);
+		userTweets.add(tweet3);
+		
+		Mockito.when(R_Tweet.findLatestTweetByUser(1L)).thenReturn(userTweets);
+		
+		List<Tweet> tweets = service.showUserTweets(1);
+		tweets.get(0);
+		assertThat(tweets.get(0)).isEqualTo(tweet1);
+	}
 }	

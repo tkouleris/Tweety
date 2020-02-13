@@ -23,6 +23,10 @@ import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.service.TweetService;
 
+//import antlr.collections.List;
+
+import java.util.List;
+
 
 @Controller
 public class TweetController 
@@ -45,6 +49,19 @@ public class TweetController
 	    
 		return new ResponseEntity<>(body,HttpStatus.OK);
 	}
+	
+	@GetMapping(path = "/tweet/user/{user_id}", produces = "application/json")
+	public ResponseEntity<Object> showTweetsByUser(@PathVariable("user_id") long user_id)
+	{			
+		List<Tweet> userTweets = tweetService.showUserTweets(user_id);
+        
+	    Map<String, Object> body = new LinkedHashMap<>();
+	    body.put("timestamp", LocalDateTime.now());
+	    body.put("message", "Tweets by user!");
+	    body.put("data", userTweets );
+	    
+		return new ResponseEntity<>(body,HttpStatus.OK);
+	}	
 	
 	@PostMapping(path = "/tweet/create", produces = "application/json")
 	public ResponseEntity<Object> createTweet(Authentication authentication, @RequestBody Tweet newTweet)

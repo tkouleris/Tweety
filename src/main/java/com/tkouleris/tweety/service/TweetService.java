@@ -75,4 +75,11 @@ public class TweetService {
 		
 		return tweetToDelete;					
 	}
+	
+	public List<Tweet> showUserTweets(long user_id)
+	{
+		List<Tweet> userTweets = R_Tweet.findLatestTweetByUser(user_id);
+		
+		return userTweets;
+	}
 }
