@@ -21,10 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.tkouleris.tweety.dao.UserRepository;
 import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
+import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.TweetService;
-
-//import antlr.collections.List;
-
 import java.util.List;
 
 
@@ -35,6 +33,8 @@ public class TweetController
 	private UserRepository R_User;
 	@Autowired
 	private TweetService tweetService;
+	@Autowired
+	private ApiResponse apiResponse;
 	
 	@GetMapping(path = "/tweet/feed", produces = "application/json")
 	public ResponseEntity<Object> getFeed(Authentication authentication)
@@ -45,7 +45,7 @@ public class TweetController
 	    Map<String, Object> body = new LinkedHashMap<>();
 	    body.put("timestamp", LocalDateTime.now());
 	    body.put("message", "User created!");
-	    body.put("data", latestUserTweet );
+	    body.put("data", latestUserTweet );	            
 	    
 		return new ResponseEntity<>(body,HttpStatus.OK);
 	}
@@ -53,14 +53,11 @@ public class TweetController
 	@GetMapping(path = "/tweet/user/{user_id}", produces = "application/json")
 	public ResponseEntity<Object> showTweetsByUser(@PathVariable("user_id") long user_id)
 	{			
-		List<Tweet> userTweets = tweetService.showUserTweets(user_id);
-        
-	    Map<String, Object> body = new LinkedHashMap<>();
-	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", "Tweets by user!");
-	    body.put("data", userTweets );
+		List<Tweet> userTweets = tweetService.showUserTweets(user_id);    
+	    apiResponse.setMessage("Tweets by user");
+	    apiResponse.setData(userTweets);
 	    
-		return new ResponseEntity<>(body,HttpStatus.OK);
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}	
 	
 	@PostMapping(path = "/tweet/create", produces = "application/json")
