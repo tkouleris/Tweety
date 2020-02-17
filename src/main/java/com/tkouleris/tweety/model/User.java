@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User {
 	@Id
@@ -14,6 +16,7 @@ public class User {
 	private long userid;
 	
 	private String username;
+	@JsonIgnore
 	private String password;
 	private String email;
 	
