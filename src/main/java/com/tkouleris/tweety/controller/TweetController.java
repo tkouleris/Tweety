@@ -1,8 +1,5 @@
 package com.tkouleris.tweety.controller;
 
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -40,14 +37,11 @@ public class TweetController
 	public ResponseEntity<Object> getFeed(Authentication authentication)
 	{			
         User LoggedInUser = R_User.findByUsername(authentication.getName());
-        Tweet latestUserTweet = tweetService.getFeed(LoggedInUser);
-        
-	    Map<String, Object> body = new LinkedHashMap<>();
-	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", "User created!");
-	    body.put("data", latestUserTweet );	            
+        Tweet latestUserTweet = tweetService.getFeed(LoggedInUser);    
+	    apiResponse.setMessage("User Feed!");
+	    apiResponse.setData(latestUserTweet);
 	    
-		return new ResponseEntity<>(body,HttpStatus.OK);
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/tweet/user/{user_id}", produces = "application/json")
@@ -63,14 +57,11 @@ public class TweetController
 	@PostMapping(path = "/tweet/create", produces = "application/json")
 	public ResponseEntity<Object> createTweet(Authentication authentication, @RequestBody Tweet newTweet)
 	{			
-		Tweet savedTweet = tweetService.createTweet(authentication,newTweet);
+		Tweet savedTweet = tweetService.createTweet(authentication,newTweet);	    
+	    apiResponse.setMessage("Tweet created!");
+	    apiResponse.setData(savedTweet);
 
-	    Map<String, Object> body = new LinkedHashMap<>();
-	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", "Tweet created!");
-	    body.put("data", savedTweet );
-
-		return new ResponseEntity<>(body,HttpStatus.CREATED);
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
 	}	
 	
 	@PutMapping(path = "tweet/update/{tweet_id}", consumes = "application/json", produces = "application/json")
@@ -80,14 +71,11 @@ public class TweetController
 			Authentication authentication
 	) throws Exception
 	{		
-		Tweet updatedTweet = tweetService.updateTweet(authentication, tweet_id, tweet.getTweet_message());
+		Tweet updatedTweet = tweetService.updateTweet(authentication, tweet_id, tweet.getTweet_message());	   
+	    apiResponse.setMessage("Tweet updated!");
+	    apiResponse.setData(updatedTweet);
 
-	    Map<String, Object> body = new LinkedHashMap<>();
-	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", "Tweet updated!");
-	    body.put("data", updatedTweet );
-
-		return new ResponseEntity<>(body,HttpStatus.OK);
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}		
 	
 	@DeleteMapping(path = "tweet/{tweet_id}")
@@ -97,12 +85,9 @@ public class TweetController
 	) throws Exception
 	{
 		Tweet deletedTweet = tweetService.deleteTweet(authentication, tweet_id);
-		
-	    Map<String, Object> body = new LinkedHashMap<>();
-	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", "Tweet deleted!");
-	    body.put("data", deletedTweet );
+	    apiResponse.setMessage("Tweet deleted!");
+	    apiResponse.setData(deletedTweet);
 
-		return new ResponseEntity<>(body,HttpStatus.OK);
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}	
 }

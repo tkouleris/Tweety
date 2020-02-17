@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tkouleris.tweety.model.User;
+import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.CustomUserDetailsService;
 import com.tkouleris.tweety.service.UserCrudService;
 import com.tkouleris.tweety.util.JwtUtil;
@@ -32,19 +33,19 @@ public class AuthController {
 	private CustomUserDetailsService userDetailsService;
 	@Autowired
 	private JwtUtil jwtTokenUtil;
+	@Autowired
+	private ApiResponse apiResponse;
+	
 	
 
 	@PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> register(@RequestBody User user) throws Exception
 	{
-		User newUser = userCrudService.createNewUser(user);
+		User newUser = userCrudService.createNewUser(user);	    
+	    apiResponse.setMessage("User created!");
+	    apiResponse.setData(newUser);
 		
-	    Map<String, Object> body = new LinkedHashMap<>();
-	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", "User created!");
-	    body.put("data", newUser);
-		
-		return new ResponseEntity<>(body,HttpStatus.CREATED);
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.CREATED);
 	}
 	
 	@PostMapping(value = "/authenticate", consumes = "application/json", produces = "application/json")
@@ -55,12 +56,10 @@ public class AuthController {
 		
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
-		
-		 Map<String, Object> body = new LinkedHashMap<>();
-		 body.put("timestamp", LocalDateTime.now());
-		 body.put("message", "Auth Token!");
-		 body.put("data", jwt);
 		 
-			return new ResponseEntity<>(body,HttpStatus.OK);		 
+		 apiResponse.setMessage("Auth Token!");
+		 apiResponse.setData(jwt);
+		 
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);		 
 	}
 }

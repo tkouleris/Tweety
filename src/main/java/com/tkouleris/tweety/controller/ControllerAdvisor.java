@@ -4,24 +4,27 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.tkouleris.tweety.responses.ApiResponse;
+
 @ControllerAdvice
 public class ControllerAdvisor {
 	
+	@Autowired
+	private ApiResponse apiResponse;
 	
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<Object> handleGenericException(Exception e) {
 		String message = e.getMessage() != null ? e.getMessage():"Bad Request";
-		
-	    Map<String, Object> body = new LinkedHashMap<>();
-	    body.put("timestamp", LocalDateTime.now());
-	    body.put("message", message);
+	    apiResponse.setMessage(message);
+	    apiResponse.setData(null);
 
-	    return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+	    return new ResponseEntity<>(apiResponse.getBodyResponse(), HttpStatus.BAD_REQUEST);
 	}
 
 }
