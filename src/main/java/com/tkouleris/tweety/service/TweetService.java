@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.tkouleris.tweety.dao.FollowerRepository;
 import com.tkouleris.tweety.dao.TweetRepository;
 import com.tkouleris.tweety.dao.UserRepository;
+import com.tkouleris.tweety.model.Follower;
 import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.util.TimestampUtil;
@@ -22,12 +24,21 @@ public class TweetService {
 	UserRepository R_User;
 	@Autowired
 	TimestampUtil timestampUtil;
+	@Autowired
+	FollowerRepository R_Follower;
 	
-	public Tweet getFeed(User loggedInUser)
+	public List<Tweet> getFeed(User loggedInUser)
 	{
+		Tweet latestUserTweet = null;
 		List<Tweet> userTweets = R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id());
-		if(userTweets.size() > 0) return userTweets.get(0);
-		return null;		
+		if(userTweets.size() > 0) latestUserTweet = userTweets.get(0);
+
+		List<Tweet> followTweets = R_Tweet.findTweetsThatUserFollows(loggedInUser);
+		if(latestUserTweet != null && latestUserTweet.getTweet_updated_at().after(timestampUtil.oneMinuteBackTimestamp()))
+		{
+			followTweets.add(0,latestUserTweet);
+		}
+		return followTweets;
 	}
 	
 	public Tweet createTweet(Authentication authentication, Tweet newTweet)

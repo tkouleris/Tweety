@@ -42,41 +42,7 @@ public class TweetServiceTest {
 	TimestampUtil timestampUtil;
 	@Mock
 	Authentication authentication;
-	
-	
-	@Test
-	void should_return_a_Tweet_when_many_feed_found()
-	{
-		User loggedInUser = new User();
-		loggedInUser.setUser_id(1);
-		List<Tweet> myList = new ArrayList<>();
-		Tweet t1 = new Tweet();
-		t1.setTweet_user_id(loggedInUser);
-		Tweet t2 = new Tweet();
-		t2.setTweet_user_id(loggedInUser);
-		myList.add(t1);
-		myList.add(t1);
 		
-		Mockito.when(R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id())).thenReturn(myList);	
-
-		Tweet tweet = service.getFeed(loggedInUser);
-
-		Assert.isTrue(tweet instanceof Tweet);
-	}
-	
-	@Test
-	void should_return_null_when_no_feed_found()
-	{
-		User loggedInUser = new User();
-		loggedInUser.setUser_id(1);
-		List<Tweet> myList = new ArrayList<>();
-		
-		Mockito.when(R_Tweet.findLatestTweetByUser(loggedInUser.getUser_id())).thenReturn(myList);	
-
-		Tweet tweet = service.getFeed(loggedInUser);
-
-		Assert.isTrue(tweet == null);
-	}
 	
 	@Test
 	void createTweet_should_return_a_tweet()

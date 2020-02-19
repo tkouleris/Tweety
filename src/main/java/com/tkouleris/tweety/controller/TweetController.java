@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.tkouleris.tweety.dao.UserRepository;
+import com.tkouleris.tweety.model.Follower;
 import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.responses.ApiResponse;
@@ -37,10 +38,10 @@ public class TweetController
 	public ResponseEntity<Object> getFeed(Authentication authentication)
 	{			
         User LoggedInUser = R_User.findByUsername(authentication.getName());
-        Tweet latestUserTweet = tweetService.getFeed(LoggedInUser);    
+        List<Tweet> userFeed = tweetService.getFeed(LoggedInUser);
 	    apiResponse.setMessage("User Feed!");
-	    apiResponse.setData(latestUserTweet);
-	    
+	    apiResponse.setData(userFeed);	    
+	   
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
 	
