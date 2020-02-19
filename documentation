@@ -1,8 +1,6 @@
 04/02/2020
 ----------------
 Endpoints
-- tweet
--- tweet/feed /* list of user following tweets ordered by date */
 
 - follow
 -- unfollow/user/user_id /* follow_id */
