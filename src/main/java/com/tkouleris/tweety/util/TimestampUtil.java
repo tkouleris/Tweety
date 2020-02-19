@@ -11,5 +11,10 @@ public class TimestampUtil {
 	{
 		return new Timestamp(System.currentTimeMillis());
 	}
+	
+	public Timestamp oneMinuteBackTimestamp()
+	{
+		return new Timestamp(System.currentTimeMillis() - 60000);
+	}
 
 }
