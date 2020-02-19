@@ -5,8 +5,7 @@ Endpoints
 -- tweet/feed /* list of user following tweets ordered by date */
 
 - follow
--- follow/add /* followee_id */
--- follow/unfollow /* follow_id */
+-- unfollow/user/user_id /* follow_id */
 
 -- comment
 -- comment/add /* tweet_id, user_id, message */
