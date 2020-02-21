@@ -2,9 +2,6 @@
 ----------------
 Endpoints
 
-- follow
--- unfollow/user/user_id /* follow_id */
-
 -- comment
 -- comment/add /* tweet_id, user_id, message */
 -- comment/update /* comment_id, message */
