@@ -14,4 +14,7 @@ import java.util.List;
 public interface FollowerRepository extends JpaRepository<Follower, Long>{
 	@Query("select f from Follower f where f.follower = ?1")
 	List<Follower> findTweetsThatUserFollows(User user);
+	
+	@Query("select f from Follower f where f.followee = ?1 and f.follower=?2")
+	Follower findByFolloweeAndFollower(User followee, User follower);
 }
