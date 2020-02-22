@@ -10,6 +10,7 @@ import com.tkouleris.tweety.dao.UserRepository;
 import com.tkouleris.tweety.model.Comment;
 import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
+import com.tkouleris.tweety.util.TimestampUtil;
 
 @Service
 public class CommentService {
@@ -19,8 +20,10 @@ public class CommentService {
 	private UserRepository R_User;
 	@Autowired
 	private CommentRepository R_Comment;	
+	@Autowired
+	private TimestampUtil timestampUtil;
 	
-	public void userMakesNewCommentAtTweet(Authentication authentication, Long tweet_id, Comment comment ) throws Exception
+	public Comment userMakesNewCommentAtTweet(Authentication authentication, Long tweet_id, Comment comment ) throws Exception
 	{
 		System.out.println(tweet_id);
 		Tweet CommentedTweet = R_Tweet.findById(tweet_id).orElse(null);
@@ -31,7 +34,9 @@ public class CommentService {
         User LoggedInUser = R_User.findByUsername(authentication.getName());
         comment.setComment_tweet_id(CommentedTweet);
         comment.setComment_user_id(LoggedInUser);
+        comment.setComment_created_at(timestampUtil.currentTimestamp());
+        comment.setComment_updated_at(timestampUtil.currentTimestamp());
         
-		R_Comment.save(comment);
+		return R_Comment.save(comment);		
 	}
 }

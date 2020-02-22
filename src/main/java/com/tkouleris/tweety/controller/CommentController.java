@@ -26,7 +26,9 @@ public class CommentController {
 			Authentication authentication,
 			@PathVariable("tweet_id") long tweet_id 
 	) throws Exception{
-		commentService.userMakesNewCommentAtTweet(authentication, tweet_id, comment);		
+		Comment savedComment = commentService.userMakesNewCommentAtTweet(authentication, tweet_id, comment);		
+		apiResponse.setData(savedComment);
+		apiResponse.setMessage("Comment crated");
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
 
