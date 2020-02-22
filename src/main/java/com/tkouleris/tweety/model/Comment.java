@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment {
@@ -12,8 +13,10 @@ public class Comment {
 	@GeneratedValue
 	private long comment_id;
 	
-	private String comment_text;	
+	private String comment_text;
+	@ManyToOne
 	private User comment_user_id;
+	@ManyToOne
 	private Tweet comment_tweet_id;
 	private Timestamp comment_created_at;
 	private Timestamp comment_updated_at;

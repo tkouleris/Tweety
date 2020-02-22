@@ -22,6 +22,9 @@ public class User {
 	
     @OneToMany(mappedBy = "follower")
     private List<Follower> follows;
+    
+    @OneToMany
+    private List<Comment> comments;
 	
 	public long getUser_id() {
 		return userid;

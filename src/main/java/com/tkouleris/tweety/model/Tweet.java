@@ -1,11 +1,14 @@
 package com.tkouleris.tweety.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Tweet {
@@ -17,8 +20,17 @@ public class Tweet {
 	private Timestamp tweet_created_at;
 	private Timestamp tweet_updated_at;
 	@ManyToOne
-	private User tweet_user;
-	
+	private User tweet_user;	
+	@OneToMany
+	@JoinColumn(name = "comment_tweet_id")
+	private List<Comment> tweet_comments;
+		
+	public List<Comment> getTweet_comments() {
+		return tweet_comments;
+	}
+	public void setTweet_comments(List<Comment> tweet_comments) {
+		this.tweet_comments = tweet_comments;
+	}
 	public long getTweet_id() {
 		return tweetid;
 	}
