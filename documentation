@@ -7,4 +7,7 @@ Endpoints
 -- comment/update /* comment_id, message */
 -- comment/delete /* comment_id */
 
+Fix:
+=======
+1. Load Comments with tweet
 
