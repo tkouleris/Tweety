@@ -21,10 +21,7 @@ public class User {
 	private String email;
 	
     @OneToMany(mappedBy = "follower")
-    private List<Follower> follows;
-    
-    @OneToMany
-    private List<Comment> comments;
+    private List<Follower> follows;    
 	
 	public long getUser_id() {
 		return userid;

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,16 +22,10 @@ public class Tweet {
 	private Timestamp tweet_updated_at;
 	@ManyToOne
 	private User tweet_user;	
-	@OneToMany
-	@JoinColumn(name = "comment_tweet_id")
-	private List<Comment> tweet_comments;
-		
-	public List<Comment> getTweet_comments() {
-		return tweet_comments;
-	}
-	public void setTweet_comments(List<Comment> tweet_comments) {
-		this.tweet_comments = tweet_comments;
-	}
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "comment_tweet_id_tweetid")
+	List<Comment> comments;
+
 	public long getTweet_id() {
 		return tweetid;
 	}

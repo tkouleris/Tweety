@@ -22,6 +22,7 @@ public interface TweetRepository  extends JpaRepository<Tweet, Long>{
 			+ "SELECT followee FROM follower WHERE follower = ?1"
 			+ ") "
 			+ "ORDER BY tweet_updated_at DESC",
-			nativeQuery = true)
+			nativeQuery = true
+	)
 	List<Tweet> findTweetsThatUserFollows(User user);
 }
