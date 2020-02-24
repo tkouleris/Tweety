@@ -3,9 +3,7 @@
 Endpoints
 
 -- comment
--- comment/add /* tweet_id, user_id, message */
 -- comment/update /* comment_id, message */
--- comment/delete /* comment_id */
 
 Fix:
 =======
