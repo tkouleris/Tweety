@@ -8,4 +8,5 @@ Endpoints
 Fix:
 =======
 1. Load Comments with tweet
+2. Jwt Expire exception - api response
 
