@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,4 +33,17 @@ public class CommentController {
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
 
+	@DeleteMapping(path="/comment/{comment_id}", produces = "application/json")
+	public ResponseEntity<Object> deleteComment(
+			Authentication authentication, 
+			@PathVariable("comment_id") 
+			long comment_id
+	) throws Exception
+	{
+		Comment deletedComment = commentService.deleteComment(authentication, comment_id);
+		apiResponse.setData(deletedComment);
+		apiResponse.setMessage("Comment deleted");
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+	}
+	
 }

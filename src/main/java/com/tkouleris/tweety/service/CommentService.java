@@ -39,4 +39,23 @@ public class CommentService {
         
 		return R_Comment.save(comment);		
 	}
+	
+	public Comment deleteComment(Authentication authentication, Long comment_id) throws Exception
+	{
+		Comment commentToDelete = R_Comment.findById(comment_id).orElse(null);
+		if(commentToDelete == null)
+		{
+			throw new Exception("Comment not found");
+		}
+		User LoggedInUser = R_User.findByUsername(authentication.getName());
+
+		if(commentToDelete.getComment_user_id() != LoggedInUser)
+		{
+			throw new Exception("Not authorized to delete this comment");
+		}
+		
+		R_Comment.delete(commentToDelete);
+				
+		return commentToDelete;
+	}
 }
