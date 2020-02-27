@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.tkouleris.tweety.model.Comment;
@@ -43,6 +44,15 @@ public class CommentController {
 		Comment deletedComment = commentService.deleteComment(authentication, comment_id);
 		apiResponse.setData(deletedComment);
 		apiResponse.setMessage("Comment deleted");
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+	}
+	
+	@PutMapping(path="comment", produces = "application/json")
+	public ResponseEntity<Object> updateComment(Authentication authentication,@RequestBody Comment comment) throws Exception
+	{
+		Comment updatedComment =commentService.updateComment(authentication, comment);
+		apiResponse.setData(updatedComment);
+		apiResponse.setMessage("Comment updated");
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
 	

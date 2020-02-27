@@ -25,7 +25,6 @@ public class CommentService {
 	
 	public Comment userMakesNewCommentAtTweet(Authentication authentication, Long tweet_id, Comment comment ) throws Exception
 	{
-		System.out.println(tweet_id);
 		Tweet CommentedTweet = R_Tweet.findById(tweet_id).orElse(null);
 		if(CommentedTweet == null)
 		{
@@ -57,5 +56,27 @@ public class CommentService {
 		R_Comment.delete(commentToDelete);
 				
 		return commentToDelete;
+	}
+	
+	public Comment updateComment(Authentication authentication, Comment comment) throws Exception
+	{
+		Comment commentToUpdate = R_Comment.findById(comment.getComment_id()).orElse(null);
+		if(commentToUpdate == null)
+		{
+			throw new Exception("Comment does not exist!");
+		}
+		User LoggedInUser = R_User.findByUsername(authentication.getName());
+		
+		if(LoggedInUser != commentToUpdate.getComment_user_id())
+		{
+			throw new Exception("Not authorized to edit this comment");
+		}
+		
+		commentToUpdate.setComment_text(comment.getComment_text());
+		commentToUpdate.setComment_updated_at(timestampUtil.currentTimestamp());
+		
+		Comment updatedComment = R_Comment.save(commentToUpdate);
+		
+		return updatedComment;
 	}
 }
