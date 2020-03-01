@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tkouleris.tweety.dao.FollowerRepository;
 import com.tkouleris.tweety.dao.UserRepository;
@@ -17,6 +18,7 @@ import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.FollowService;
 
 @Controller
+@RequestMapping("/tweety")
 public class FollowController {
 	
 	@Autowired

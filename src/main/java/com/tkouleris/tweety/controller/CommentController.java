@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tkouleris.tweety.model.Comment;
 import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.CommentService;
 
 @Controller
+@RequestMapping("/tweety")
 public class CommentController {
 	@Autowired
 	CommentService commentService;

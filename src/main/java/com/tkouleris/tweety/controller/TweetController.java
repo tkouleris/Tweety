@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tkouleris.tweety.dao.UserRepository;
-import com.tkouleris.tweety.model.Follower;
 import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.responses.ApiResponse;
@@ -25,6 +25,7 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping("/tweety")
 public class TweetController 
 {
 	@Autowired
