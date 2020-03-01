@@ -1,6 +1,6 @@
 <h1>Tweety API</h1>
 <p align="center">
-  <img src="https://img.favpng.com/22/5/15/tweety-colouring-pages-sylvester-coloring-book-looney-tunes-png-favpng-qB2ufeyKgv8aavY0iRftk7qTi.jpg" />
+  <img src="https://www.nationalnannies.com/wp-content/uploads/2012/03/tweety.jpg" />
 </p>
 
 <p>
