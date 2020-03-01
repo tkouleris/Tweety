@@ -1,5 +1,8 @@
 <h1>Tweety API</h1>
-<img src="https://img.favpng.com/22/5/15/tweety-colouring-pages-sylvester-coloring-book-looney-tunes-png-favpng-qB2ufeyKgv8aavY0iRftk7qTi.jpg" />
+<p align="center">
+  <img src="https://img.favpng.com/22/5/15/tweety-colouring-pages-sylvester-coloring-book-looney-tunes-png-favpng-qB2ufeyKgv8aavY0iRftk7qTi.jpg" />
+</p>
+
 <p>
 Twitter clone in Spring Boot. Allows user creation, user can follow another user, tweet and comment.
 </p>
