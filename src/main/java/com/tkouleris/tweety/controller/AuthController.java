@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tkouleris.tweety.dto.LoginDto;
 import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.CustomUserDetailsService;
@@ -32,6 +33,8 @@ public class AuthController {
 	private JwtUtil jwtTokenUtil;
 	@Autowired
 	private ApiResponse apiResponse;
+	@Autowired
+	private LoginDto loginDto;
 	
 	
 
@@ -53,9 +56,12 @@ public class AuthController {
 		
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
-		 
-		 apiResponse.setMessage("Auth Token!");
-		 apiResponse.setData(jwt);
+		
+		loginDto.setJwt(jwt);
+		loginDto.setUsername(user.getUsername());
+		
+		apiResponse.setMessage("Auth Token!");
+		apiResponse.setData(loginDto);
 		 
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);		 
 	}
