@@ -3,6 +3,7 @@ package com.tkouleris.tweety.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.tkouleris.tweety.dao.CommentRepository;
 import com.tkouleris.tweety.dao.TweetRepository;
@@ -78,5 +79,11 @@ public class CommentService {
 		Comment updatedComment = R_Comment.save(commentToUpdate);
 		
 		return updatedComment;
+	}
+	
+	public List<Comment> showTweetComments(long tweet_id)
+	{
+		Tweet commented_tweet = R_Tweet.findById(tweet_id).orElse(null);
+		return R_Comment.findByTweetId(commented_tweet);
 	}
 }

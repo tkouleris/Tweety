@@ -1,11 +1,14 @@
 package com.tkouleris.tweety.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +36,16 @@ public class CommentController {
 		Comment savedComment = commentService.userMakesNewCommentAtTweet(authentication, tweet_id, comment);		
 		apiResponse.setData(savedComment);
 		apiResponse.setMessage("Comment crated");
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+	}
+	
+
+	@GetMapping(path = "/tweet/{tweet_id}/comment", produces = "application/json")
+	public ResponseEntity<Object> showTweetComments(@PathVariable("tweet_id") long tweet_id)
+	{
+		List<Comment> tweet_comments = commentService.showTweetComments(tweet_id);
+		apiResponse.setData(tweet_comments);
+		apiResponse.setMessage("tweet comments");
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
 
