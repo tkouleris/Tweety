@@ -1,6 +1,9 @@
 package com.tkouleris.tweety.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +54,12 @@ public class UserCrudService {
 		
 	    user.setPassword(passwordEncoder.encode(user.getPassword()));	    
 	    return R_User.save(user);
+	}
+	
+	public List<Object[]> listUsers(Authentication authentication)
+	{
+		User LoggedInUser = R_User.findByUsername(authentication.getName());
+		return R_User.listUsers(LoggedInUser);
 	}
 	
 	private Boolean user_exists(User user)
