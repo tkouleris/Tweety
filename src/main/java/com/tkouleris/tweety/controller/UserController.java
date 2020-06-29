@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.UserCrudService;
 
@@ -24,7 +25,7 @@ public class UserController {
 	@GetMapping(path = "/user/list", produces = "application/json")
 	public ResponseEntity<Object> listOfUsers(Authentication authentication)
 	{
-		List<Object[]> userList = userService.listUsers(authentication);
+		List<User> userList = userService.listUsers(authentication);
 		apiResponse.setData(userList);
 		apiResponse.setMessage("User List");
 		

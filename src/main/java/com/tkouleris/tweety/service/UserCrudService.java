@@ -56,10 +56,10 @@ public class UserCrudService {
 	    return R_User.save(user);
 	}
 	
-	public List<Object[]> listUsers(Authentication authentication)
+	public List<User> listUsers(Authentication authentication)
 	{
 		User LoggedInUser = R_User.findByUsername(authentication.getName());
-		return R_User.listUsers(LoggedInUser);
+		return R_User.findByUsernameNot(LoggedInUser.getUsername());
 	}
 	
 	private Boolean user_exists(User user)
