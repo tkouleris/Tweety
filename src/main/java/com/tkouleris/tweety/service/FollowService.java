@@ -40,7 +40,7 @@ public class FollowService {
 			throw new Exception("User not found!");
 		}
 		
-		Follower f = R_Follower.findByFolloweeAndFollower(FolloweeUser,LoggedInUser);
+		Follower f = R_Follower.findByFolloweeAndFollower(FolloweeUser,LoggedInUser).orElse(null);
 		if(f == null)
 		{
 			throw new Exception("User not following " + FolloweeUser.getUsername());

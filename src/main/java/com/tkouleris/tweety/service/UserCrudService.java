@@ -7,7 +7,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.tkouleris.tweety.dao.FollowerRepository;
 import com.tkouleris.tweety.dao.UserRepository;
+import com.tkouleris.tweety.dto.Tweeter;
+import com.tkouleris.tweety.dto.TweetersList;
+import com.tkouleris.tweety.model.Follower;
 import com.tkouleris.tweety.model.User;
 
 @Service
@@ -17,6 +21,8 @@ public class UserCrudService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private UserRepository R_User;
+	@Autowired
+	private FollowerRepository R_Follower;
 	 	
 	public User createNewUser(User user) throws Exception
 	{
@@ -56,10 +62,29 @@ public class UserCrudService {
 	    return R_User.save(user);
 	}
 	
-	public List<User> listUsers(Authentication authentication)
+	public TweetersList listUsers(Authentication authentication)
 	{
 		User LoggedInUser = R_User.findByUsername(authentication.getName());
-		return R_User.findByUsernameNot(LoggedInUser.getUsername());
+		List<User> userList = R_User.findByUsernameNot(LoggedInUser.getUsername());
+		
+		TweetersList tweetersList = new TweetersList();
+		for(User user: userList)
+		{
+			Tweeter tweeter = new Tweeter();
+			tweeter.user_id = user.getUser_id();
+			tweeter.username = user.getUsername();
+			tweeter.email = user.getEmail();
+			Follower f = R_Follower.findByFolloweeAndFollower(user,LoggedInUser).orElse(null);
+			if(f == null)
+			{
+				tweeter.is_followed_by_user = false;
+			}else {
+				tweeter.is_followed_by_user = true;
+			}
+			tweetersList.tweetersList.add(tweeter);			
+		}
+		
+		return tweetersList;
 	}
 	
 	private Boolean user_exists(User user)
