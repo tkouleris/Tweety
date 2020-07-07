@@ -23,4 +23,9 @@ public class CustomUserDetailsService implements UserDetailsService{
 		return new CustomUserDetails(user);
 	}
 	
+	public User getUserByUsername(String username)
+	{
+		return R_user.findByUsername(username);
+	}
+	
 }
