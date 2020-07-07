@@ -59,6 +59,7 @@ public class AuthController {
 		
 		loginDto.setJwt(jwt);
 		loginDto.setUsername(user.getUsername());
+		loginDto.setUserid(user.getUser_id());
 		
 		apiResponse.setMessage("Auth Token!");
 		apiResponse.setData(loginDto);

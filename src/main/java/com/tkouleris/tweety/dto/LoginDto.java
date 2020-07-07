@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class LoginDto {
 	private String username;
 	private String jwt;
+	private long userid;
 	
 	public String getUsername() {
 		return username;
@@ -19,6 +20,10 @@ public class LoginDto {
 	public void setJwt(String jwt) {
 		this.jwt = jwt;
 	}
-	
-	
+	public long getUserid() {
+		return userid;
+	}
+	public void setUserid(long userid) {
+		this.userid = userid;
+	}	
 }
