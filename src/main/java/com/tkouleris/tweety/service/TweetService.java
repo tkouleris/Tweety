@@ -87,6 +87,16 @@ public class TweetService {
 		return tweetToDelete;					
 	}
 	
+	public Tweet getTweet(long tweet_id) throws Exception
+	{
+		Tweet tweet = R_Tweet.findById(tweet_id).orElse(null);
+		if(tweet == null)
+		{
+			throw new Exception("No tweet found!");			
+		}
+		return tweet;
+	}
+	
 	public List<Tweet> showUserTweets(long user_id)
 	{
 		List<Tweet> userTweets = R_Tweet.findLatestTweetByUser(user_id);

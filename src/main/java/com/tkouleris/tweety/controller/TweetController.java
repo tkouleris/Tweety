@@ -92,4 +92,14 @@ public class TweetController
 
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}	
+	
+	@GetMapping(path = "/tweet/{tweet_id}", produces = "application/json")
+	public ResponseEntity<Object> getTweet(@PathVariable("tweet_id") long tweet_id) throws Exception
+	{
+		Tweet tweet = tweetService.getTweet(tweet_id);
+		apiResponse.setMessage("Tweet");
+		apiResponse.setData(tweet);
+		
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+	}
 }
