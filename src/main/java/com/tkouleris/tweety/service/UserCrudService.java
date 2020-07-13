@@ -62,6 +62,26 @@ public class UserCrudService {
 	    return R_User.save(user);
 	}
 	
+	public User changePassword(User user) throws Exception
+	{
+		String UserPassword = user.getPassword().trim();
+		/* Password Restriction
+		 * ------------------------
+		 * At least 8 chars
+		 * Contains at least one digit
+		 * Contains at least one lower alpha char and one upper alpha char
+		 * Contains at least one char within a set of special chars (@#%$^ etc.)
+		 * Does not contain space, tab, etc.
+		 */
+		boolean PasswordIsNotValid = (UserPassword == null ) 
+				|| !UserPassword.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}");
+		
+		if(PasswordIsNotValid ) throw new Exception("Password not set or not valid");
+		
+	    user.setPassword(passwordEncoder.encode(user.getPassword()));	    
+	    return R_User.save(user);
+	}
+	
 	public TweetersList listUsers(Authentication authentication)
 	{
 		User LoggedInUser = R_User.findByUsername(authentication.getName());

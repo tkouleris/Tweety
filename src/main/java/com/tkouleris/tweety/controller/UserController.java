@@ -6,15 +6,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tkouleris.tweety.dao.UserRepository;
 import com.tkouleris.tweety.dto.TweetersList;
+import com.tkouleris.tweety.model.Tweet;
+import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.UserCrudService;
 
 @Controller
 @RequestMapping("/tweety")
 public class UserController {
+	
+	@Autowired
+	private UserRepository R_User;
 	@Autowired
 	private UserCrudService userService;
 	@Autowired
@@ -26,6 +34,18 @@ public class UserController {
 		TweetersList userList = userService.listUsers(authentication);
 		apiResponse.setData(userList);
 		apiResponse.setMessage("User List");
+		
+		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
+	}
+	
+	@PostMapping(path = "/user/change_password", produces = "application/json")
+	public ResponseEntity<Object> changePassword(Authentication authentication, @RequestBody User user) throws Exception
+	{
+        User LoggedInUser = R_User.findByUsername(authentication.getName());
+        user.setUser_id(LoggedInUser.getUser_id());
+		User updatedUser = userService.changePassword(user);
+		apiResponse.setData(updatedUser);
+		apiResponse.setMessage("Password changes");
 		
 		return new ResponseEntity<>(apiResponse.getBodyResponse(),HttpStatus.OK);
 	}
