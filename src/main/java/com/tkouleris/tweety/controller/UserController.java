@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tkouleris.tweety.dao.UserRepository;
 import com.tkouleris.tweety.dto.TweetersList;
-import com.tkouleris.tweety.model.Tweet;
 import com.tkouleris.tweety.model.User;
 import com.tkouleris.tweety.responses.ApiResponse;
 import com.tkouleris.tweety.service.UserCrudService;
@@ -43,6 +42,8 @@ public class UserController {
 	{
         User LoggedInUser = R_User.findByUsername(authentication.getName());
         user.setUser_id(LoggedInUser.getUser_id());
+        user.setEmail(LoggedInUser.getEmail());
+        user.setUsername(LoggedInUser.getUsername());
 		User updatedUser = userService.changePassword(user);
 		apiResponse.setData(updatedUser);
 		apiResponse.setMessage("Password changes");
